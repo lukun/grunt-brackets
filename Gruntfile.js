@@ -1,10 +1,52 @@
 module.exports = function(grunt) {
 
+    'use strict';
+
+    //Carregar os plugins
+    require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
+
     //iniciar as configurações das tarefas
-	grunt.initConfig({
-        
+    grunt.initConfig({
+
         //Carregar Plugins instalados
-		pkg: grunt.file.readJSON('package.json'),
+        pkg: grunt.file.readJSON('package.json'),
+
+        //Tarefa de trocar os links de referências nos arquivos html
+        processhtml: {
+            deploy: {
+                options: {
+                    process: true
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'build/',
+                        src: ['**/*.html'],
+                        dest: 'release/',
+                        ext: '.html'
+                    }
+                ]
+            }
+        },
+
+        //Tarefa de copiar itens
+        copy: {
+            main: {
+                files: [
+                    // includes files within path PASTA
+                    //{expand: true, src: ['build/*.html'], dest: 'release/', filter: 'isFile'},
+
+                    // flattens results to a single level INDEX
+                    //{expand: true, flatten: true, src: ['build/*.html'], dest: 'release/', filter: 'isFile'}
+                    // includes files within path and its sub-directories
+                    //{expand: true, src: ['path/**'], dest: 'dest/'},
+
+                    // makes all src relative to cwd
+                    {expand: true, cwd: 'build/', src: ['*.html'], dest: 'release/'},
+
+                ]
+            }
+        },
 
         //Tarefa de juntar os CSS de desenvolvimento e colocar em um só na build
         cssmin: {
@@ -15,7 +57,7 @@ module.exports = function(grunt) {
                 }
             }
         },
-        
+
         //Tarefa de compilar SCSS para CSS
         sass: {
             compile: {
@@ -31,21 +73,14 @@ module.exports = function(grunt) {
                 ext: '.css'
             }
         }
-        
-    //final das configurações das tarefas
-	});
-    
 
-    //Carregar os plugins
-	grunt.loadNpmTasks('grunt-contrib-sass');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
+        //final das configurações das tarefas
+    });
 
     //Tarefa default de desenvolvimento
     grunt.registerTask('default', ['sass']);
-    //Tarefa final de produção
-    grunt.registerTask('release', ['sass', 'cssmin']);
-
-    //Tarefas personalizadas
-	//grunt.registerTask('dev', ['watch']);
+    grunt.registerTask('release', ['sass', 'cssmin', 'copy', 'processhtml']);
+    
+    grunt.registerTask('printenv', function () { console.log(process.env); });
 
 };
