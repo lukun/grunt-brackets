@@ -1,0 +1,30 @@
+/* line 5, ../../source/sass/_nav.scss */
+#nav a {
+  color: #ee3333;
+  text-decoration: none;
+}
+/* line 9, ../../source/sass/_nav.scss */
+#nav a:hover {
+  color: #1f0303;
+}
+
+/* line 15, ../../source/sass/_nav.scss */
+.div-lorem {
+  background-color: rgba(200, 200, 200, 0.8);
+  padding: 10px;
+  border-radius: 10px;
+  border-style: dashed;
+}
+/* line 23, ../../source/sass/_nav.scss */
+.div-lorem p {
+  color: #E00;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* line 33, ../../source/sass/_nav.scss */
+.vermelho {
+  color: red;
+}
+
+/*# sourceMappingURL=main.css.map */
