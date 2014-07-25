@@ -10,6 +10,21 @@ module.exports = function(grunt) {
 
         //Carregar Plugins instalados
         pkg: grunt.file.readJSON('package.json'),
+        
+        //
+        jade: {
+            compile: {
+                options: {
+                    pretty: true,
+                    data: {
+                        debug: true
+                    }
+                },
+                files: {
+                    "build/index.html": ["source/index.jade"]
+                }
+            }
+        },
 
         //Tarefa de trocar os links de referências nos arquivos html
         processhtml: {
@@ -47,6 +62,25 @@ module.exports = function(grunt) {
                 ]
             }
         },
+        
+        //
+        htmlmin: {
+            dist: {
+                options: {
+                    removeComments: true,
+                    collapseWhitespace: true
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'build/',
+                        src: ['**/*.html'],
+                        dest: 'release/',
+                        ext: '.html'
+                    }
+                ]
+            }
+        },
 
         //Tarefa de juntar os CSS de desenvolvimento e colocar em um só na build
         cssmin: {
@@ -58,6 +92,15 @@ module.exports = function(grunt) {
             }
         },
 
+        //
+        coffee: {
+            compile: {
+                files: {
+                    'build/js/main.js': 'source/coffees/main.coffee'
+                }
+            }
+        },
+        
         //Tarefa de compilar SCSS para CSS
         sass: {
             compile: {
@@ -78,8 +121,8 @@ module.exports = function(grunt) {
     });
 
     //Tarefa default de desenvolvimento
-    grunt.registerTask('default', ['sass']);
-    grunt.registerTask('release', ['sass', 'cssmin', 'copy', 'processhtml']);
+    grunt.registerTask('default', ['sass', 'coffee', 'jade']);
+    grunt.registerTask('release', ['cssmin', 'processhtml', 'htmlmin']);
     
     grunt.registerTask('printenv', function () { console.log(process.env); });
 

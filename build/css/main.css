@@ -17,7 +17,7 @@
 }
 /* line 23, ../../source/sass/_nav.scss */
 .div-lorem p {
-  color: #00E;
+  color: #00fffE;
   font-weight: bold;
   font-size: 18px;
 }
@@ -25,6 +25,16 @@
 /* line 33, ../../source/sass/_nav.scss */
 .vermelho {
   color: red;
+}
+
+/* line 2, ../../source/sass/_footer.scss */
+#footer hr {
+  margin: 50px;
+  color: blue;
+}
+/* line 7, ../../source/sass/_footer.scss */
+#footer p {
+  color: gray;
 }
 
 /*# sourceMappingURL=main.css.map */
