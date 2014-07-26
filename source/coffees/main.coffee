@@ -1,6 +1,12 @@
+###!
+*   
+*   Luciano Andrade
+*   Teste de comentário para preservar no main.coffee
+*   
+###
 $ ->
     console.log("DOM is ready")
-    console.log("teste")
+    console.log("teste segunda linha")
     console.log("terceiro console")
     $ '.div-lorem'
         .delay 5000

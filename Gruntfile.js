@@ -73,7 +73,7 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: 'build/',
+                        cwd: 'release/',
                         src: ['**/*.html'],
                         dest: 'release/',
                         ext: '.html'
@@ -88,6 +88,21 @@ module.exports = function(grunt) {
                 files: {
                     'release/css/main.css': ['vendor/css/normalize.css',
                                              'build/css/*.css']
+                }
+            }
+        },
+        
+        //
+        uglify: {
+            options: {
+                preserveComments: 'some',
+                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+                        '<%= grunt.template.today("yyyy-mm-dd") %> */\n\n'
+            },
+            my_target: {
+                files: {
+                    'release/js/main.js': ['vendor/js/jquery-2.1.1.min.js',
+                                           'build/js/*.js']
                 }
             }
         },
@@ -115,14 +130,35 @@ module.exports = function(grunt) {
                 dest: './build/css/',
                 ext: '.css'
             }
+        },
+        
+        //
+        watch: {
+            sass: {
+                files: ['source/sass/*.scss'],
+                tasks: ['sass']
+            },
+            coffee: {
+                files: ['source/coffes/*.coffee'],
+                tasks: ['coffee']
+            },
+            jade: {
+                files: ['source/index.jade', 'source/jades/*.jade'],
+                tasks: ['jade']
+            },
+            livereload: {
+                options: { livereload: true },
+                files: ['build/**/*']
+            }
         }
 
         //final das configurações das tarefas
     });
 
     //Tarefa default de desenvolvimento
-    grunt.registerTask('default', ['sass', 'coffee', 'jade']);
-    grunt.registerTask('release', ['cssmin', 'processhtml', 'htmlmin']);
+    grunt.registerTask('default', []);
+    grunt.registerTask('build', ['sass', 'coffee', 'jade']);
+    grunt.registerTask('release', ['cssmin', 'uglify', 'processhtml', 'htmlmin']);
     
     grunt.registerTask('printenv', function () { console.log(process.env); });
 
